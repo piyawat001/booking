@@ -23,9 +23,13 @@ def index():
 
 @app.route('/book', methods=['POST'])
 def book():
-    name = request.form['name']
-    date = request.form['date']
-    time = request.form['time']
+    data = request.json
+    name = data.get('name')
+    date = data.get('date')
+    time = data.get('time')
+    
+    if not (name and date and time):
+        return jsonify({'success': False, 'message': 'ข้อมูลไม่ครบถ้วน'})
     
     # ตรวจสอบการจองซ้ำ
     existing_booking = bookings.find_one({'date': date, 'time': time})
@@ -66,7 +70,6 @@ def get_bookings():
     print("Sending bookings:", all_bookings)
     return jsonify(all_bookings)
 
-
 @app.route('/booking/<id>', methods=['PUT'])
 def update_booking(id):
     data = request.json
@@ -84,6 +87,7 @@ def update_booking(id):
 def delete_booking(id):
     result = bookings.delete_one({'_id': ObjectId(id)})
     return jsonify({'success': result.deleted_count > 0})
+
 @app.route('/available_times', methods=['GET'])
 def get_available_times():
     date = request.args.get('date')
@@ -105,4 +109,4 @@ def get_available_times():
     return jsonify(available_times)
 
 if __name__ == '__main__':
-    app.run(debug=True)()
+    app.run(debug=True)
