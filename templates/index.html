@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="th">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ระบบจองคิวร้านทำเล็บ</title>
+    <link href="https://fonts.googleapis.com/css2?family=Prompt:wght@300;400;600&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}" />
+  </head>
+  <body>
+    <div class="container">
+      <header>
+        <h1>ระบบจองคิวร้านทำเล็บ</h1>
+      </header>
+      <main>
+        <section class="booking-form">
+          <h2>จองคิว</h2>
+          <form id="booking-form">
+            <input type="text" id="name" placeholder="ชื่อ" required />
+            <input type="date" id="date" required />
+            <select id="time" required>
+              <option value="">เลือกเวลา</option>
+            </select>
+            <button type="submit">จอง</button>
+          </form>
+        </section>
+        <section class="calendar-section">
+          <h2>ปฏิทินการจอง</h2>
+          <div class="calendar-nav">
+            <span id="current-month-year"></span>
+          </div>
+          <div id="calendar"></div>
+        </section>
+      </main>
+      <div id="booking-details" class="modal">
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h3>รายละเอียดการจอง</h3>
+          <div id="details-content"></div>
+        </div>
+      </div>
+    </div>
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+  </body>
+</html>
